@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+       #map {
+        height: 400px;
+        width: 100%;
+       }
+     
+    </style>
+  </head>
+  <body>
+    <h3 align="center">MCSPF</h3>
+    <br>
+  
+    <div id="map"></div>
+    
+    <script>
+        var res
+        function recive(data) {
+            console.log("I have data")
+            res = data
+        }recive({{ data|safe }})
+            function initMap() {
+                console.log()
+                console.log("I'm here")
+                var uluru = {lat: res["lat"], lng: res["lng"]};
+                var map = new google.maps.Map(document.getElementById('map'), {
+                  zoom: 10,
+                  center: uluru
+                });
+                var marker = new google.maps.Marker({
+                  position: uluru,
+                  map: map
+                });
+
+      }
+
+    </script>
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeYpgfqDk-8JxTQT9A4J7vOVeMuqqHC7g&callback=initMap">
+
+    </script>
+  <script>
+
+  </script>
+  </body>
+</html>
+      
