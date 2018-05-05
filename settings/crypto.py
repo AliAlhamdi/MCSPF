@@ -1,4 +1,4 @@
-from cryptography.hazmat.primitives import hashes
+# from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.backends import default_backend
@@ -10,12 +10,21 @@ key from load_key() func'''
 
 def decrypt(encrypted_data):
     pk = load_pr_key()
-    pk.decrypt(encrypted_data, padding.OAEP(
-        mgf=padding.MGF1(algorithm=hashes.SHA1()),
-        algorithm=hashes.SHA1(),
-        label=None
+    plaintext = pk.decrypt(
+    encrypted_data,
+    padding.PKCS1v15()
+    )
+    return plaintext
+
+
+def encrypt(plaintext):
+    pu_key = load_pu_key()
+    ciphertext = pu_key.encrypt(
+        plaintext, padding.PKCS1v15(
+
         )
     )
+    return ciphertext
 
 
 '''this func shall load the private key from the .pem file.'''
@@ -42,7 +51,7 @@ def load_pu_key():
         encoding=serialization.Encoding.PEM,
         format=serialization.PublicFormat.PKCS1,
     )
-    return key
+    return public_key
 
 
 ''' This func will create a Private and it's
@@ -60,7 +69,7 @@ def create_keys():
     # convert the private key into bytes to be written as .pem file.
     pr_pem = private_key.private_bytes(
         encoding=serialization.Encoding.PEM,
-        format=serialization.PrivateFormat.TraditionalOpenSSL,
+        format=serialization.PrivateFormat.PKCS1,
         encryption_algorithm=serialization.NoEncryption()
         )
     pu_pem = public_key.public_bytes(
@@ -72,5 +81,3 @@ def create_keys():
         private_file.write(pr_pem)
     with open('pu_key.pem', 'wb') as public_file:
         public_file.write(pu_pem)
-
-create_keys()

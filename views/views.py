@@ -3,13 +3,13 @@ from database import *
 
 pages = Blueprint('pages', __name__)
 
-
-@pages.route('/show')
+#
+# @pages.route('/show')
 # This will route you to user location and their names + other sensed data
 # I think it should be merged with the dashboard.
-def show_map():
-    entries = {"lat": 24.7140015, 'lng': 46.6415485}
-    return render_template('showmap.html', data=entries)
+# def show_map():
+#     entries = {"lat": 24.7140015, 'lng': 46.6415485}
+#     return render_template('showmap.html', data=entries)
 
 
 ''' It will show the traffic of user as heat map '''

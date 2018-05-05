@@ -3,8 +3,9 @@ from views.api import api
 from database import database, db
 from views.views import pages
 from settings.crypto import *
+from flask_cors import CORS, cross_origin
 app = Flask(__name__)
-
+# CORS(app)
 app.register_blueprint(api)
 app.register_blueprint(pages)
 app.config['SQLALCHEMY_DATABASE_URI'] =\
